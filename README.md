@@ -7,8 +7,30 @@ Author: Jared Wilder. First public timestamp: 2026-09-10.
 
 ## Two finished proofs
 
-`lean-proofs/Erdos503.lean` — 354 lines, **0 `sorry`**, a complete multi-part proof. Every 3-point
-set of bounded diameter spanning only two distinct distances yields at most C(d+2, 2) points.
+`lean-proofs/Erdos503.lean` — 354 lines, **0 `sorry`**, a complete multi-part proof, **8 of 8
+theorems with footprint `{propext, Classical.choice, Quot.sound}`** and no `sorryAx`, no
+`ofReduceBool`, no `native_decide`.
+
+**What it actually proves is written up in [ERDOS-503-ISOSCELES.md](ERDOS-503-ISOSCELES.md),** which
+was sitting unpublished while only the bare Lean file shipped. The centrepiece is an orthogonal
+join: **orthogonality plus equal radii force every cross distance to the single value `sqrt(2R^2)`,
+with no side condition.** From it the file derives superadditivity `S(d1+d2) >= S(d1)+S(d2)`, and
+these exact isosceles numbers:
+
+| d | iso(d) | route |
+|---|---|---|
+| 2 | **6** | pentagon plus centre (Kelly), reproduced from the mechanism rather than looked up |
+| 3 | **8** | join(pentagon, two axis points) plus centre = 5+2+1 (Croft/Kelly), reproduced |
+| 6 | **28** | Schlafli 27 plus centre = C(8,2) |
+| 8 | **45** | 45-point two-distance set in R^8 = C(10,2), no centre needed |
+| 22 | **276** | McLaughlin 275 plus centre = C(24,2) |
+
+It also proves the DGS and Blokhuis bounds differ by **exactly 1**: `d(d+3)/2 + 1 = C(d+2,2)`.
+
+The write-up notes that d = 22 is not listed in Ionin, *Isosceles Sets* (EJC 2009), which records
+sharpness at n = 1, 2, 6, 8, nor on erdosproblems.com/503 -- and then says in its own words:
+**"No novelty claim is made -- two web sources is not a literature search."** Numeric cross-checks
+independent of Lean are included, including 3,654 of 3,654 clean triples at n = 8.
 
 `lean-proofs/Erdos289Head.lean` — 68 lines, **0 `sorry`**, using `decide +kernel`. Reciprocal-sum
 bounds F1 and the W4n and W4b forms in pure naturals and in rationals, exhaustive over [5, 60].
