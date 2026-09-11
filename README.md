@@ -1,10 +1,10 @@
-# Erdős Lean remainder: two completed proofs and unfinished formalizations
+# Erdős Lean remainder: completed formal results and unfinished formalizations
 
-This repository contains **two completed kernel-clean Lean developments**—an Erdős 503 orthogonal-join construction with exact isosceles numbers, and a finite reciprocal-sum bound for Erdős 289—alongside 73 earlier statement/proof attempts and three large SAT instances for `R(5,5)`.
+This repository is the canonical public home for the Erdős #503 Lean/geometry material and the finite Erdős #289 Lean fragment, alongside 73 earlier formalization attempts and three large SAT instances for `R(5,5)`.
 
 Author: Jared Wilder. First public timestamp: 2026-09-10.
 
-## 1. Erdős 503: orthogonal joins and exact isosceles numbers
+## 1. Erdős 503 — formal construction, exact values, and new geometric extensions
 
 `lean-proofs/Erdos503.lean` is 354 lines with **0 `sorry`** and eight theorems, all with axiom footprint
 
@@ -14,37 +14,28 @@ Author: Jared Wilder. First public timestamp: 2026-09-10.
 
 No `sorryAx`, `ofReduceBool`, or `native_decide` is used.
 
-The accompanying writeup [`ERDOS-503-ISOSCELES.md`](ERDOS-503-ISOSCELES.md) develops the central construction:
+The main formal writeup [`ERDOS-503-ISOSCELES.md`](ERDOS-503-ISOSCELES.md) develops the orthogonal-join construction:
 
 > **Orthogonality plus equal radii force every cross distance in the join to the common value `sqrt(2R^2)`.**
 
-From this the file derives superadditivity
+It derives superadditivity
 
-```text
-S(d1+d2) >= S(d1)+S(d2)
-```
+`S(d1+d2) >= S(d1)+S(d2)`
 
-and reproduces the following exact isosceles numbers:
+and reproduces exact isosceles numbers in dimensions 2, 3, 6, 8, and 22.
 
-| d | iso(d) | construction |
-|---|---:|---|
-| 2 | **6** | pentagon plus centre (Kelly) |
-| 3 | **8** | pentagon + two axis points + centre (Croft/Kelly) |
-| 6 | **28** | Schläfli 27 plus centre |
-| 8 | **45** | 45-point two-distance set in `R^8` |
-| 22 | **276** | McLaughlin 275 plus centre |
+The new companion note [`ERDOS-503-GEOMETRY-EXTENSIONS.md`](ERDOS-503-GEOMETRY-EXTENSIONS.md) adds two unconditional geometric results:
 
-It also proves that the Delsarte–Goethals–Seidel and Blokhuis bounds differ by exactly 1:
+- **`f(1)=3` exactly**;
+- for every `d>=2`, **`f(d) >= C(d+1,2)+1`** via the centered regular-simplex edge-midpoint construction.
 
-```text
-d(d+3)/2 + 1 = C(d+2,2).
-```
+The simplex-midpoint construction is a direct two-distance-set argument; every midpoint is also equidistant from the center.
 
-The `d=22` value was not found in the limited literature sources checked for this release; that observation is not a comprehensive priority search. Independent numerical checks include all 3,654 triples at `d=8`.
+## 2. Erdős 289 — finite reciprocal-sum bounds
 
-## 2. Erdős 289: finite reciprocal-sum bounds
+`lean-proofs/Erdos289Head.lean` is 68 lines with **0 `sorry`**, using kernel `decide`. It proves the finite reciprocal-sum bounds F1, W4n and W4b in natural and rational forms over `[5,60]`.
 
-`lean-proofs/Erdos289Head.lean` is 68 lines with **0 `sorry`**, using kernel `decide`. It proves the finite reciprocal-sum bounds F1, W4n and W4b in natural and rational forms over the range `[5,60]`.
+The broader all-prime p-adic theorem now has its canonical compact writeup in `jaredwilder/erdos-proved-lemmas`.
 
 ## 3. Earlier formalization attempts
 
@@ -53,7 +44,7 @@ The `d=22` value was not found in the limited literature sources checked for thi
 - **70 contain `sorry`.**
 - **3 do not contain `sorry`.**
 
-These files are useful as formalization records, not as a curated theorem collection. Absence of `sorry` alone is not enough to establish that a statement is mathematically substantive or faithful to its source; each file still needs ordinary theorem/source inspection.
+These are formalization records rather than a curated theorem collection. Each still requires ordinary inspection of both theorem content and source fidelity.
 
 The more curated formal material from the same research estate lives in `erdos-theorems`, `lean-forge-graph-theory`, and `erdos595-barrier-tower`.
 
@@ -65,14 +56,11 @@ The more curated formal material from the same research estate lives in `erdos-t
 - `repair-480.cnf`
 - `repair-723.cnf`
 
-Each is about 84 MB and stored in a DRAT/LRAT-adjacent workflow format.
-
-They are **reproducible SAT instances**, not checked proofs of a new Ramsey bound. No solver certificate establishing a new `R(5,5)` result is included here.
+Each is about 84 MB. They are reproducible SAT instances; no solver certificate establishing a new unrestricted Ramsey bound is included here.
 
 ## Related repositories
 
-For curated formal mathematics:
-
+- [erdos-proved-lemmas](https://github.com/jaredwilder/erdos-proved-lemmas) — compact proved child theorems;
 - [erdos-theorems](https://github.com/jaredwilder/erdos-theorems) — 79 declarations with clean axiom-footprint accounting;
 - [lean-forge-graph-theory](https://github.com/jaredwilder/lean-forge-graph-theory) — 218 sorry-free theorem files;
 - [erdos595-barrier-tower](https://github.com/jaredwilder/erdos595-barrier-tower) — 27 sorry-free barrier-theorem files;
