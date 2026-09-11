@@ -1,77 +1,82 @@
-# erdos-lean-remainder
+# Erdős Lean remainder: two completed proofs and unfinished formalizations
 
-**Two finished Lean proofs: the Erdos 503 orthogonal join with the exact isosceles numbers
-iso(2)=6, iso(3)=8, iso(6)=28, iso(8)=45, iso(22)=276, and an exhaustive reciprocal-sum bound for
-Erdos 289.** Both kernel-clean, 8 of 8 and 5 of 5 declarations with the standard footprint.
-
-Also here, labelled as what they are: 73 formalization attempts of which 70 still contain `sorry`,
-and three SAT repair certificates for R(5,5).
+This repository contains **two completed kernel-clean Lean developments**—an Erdős 503 orthogonal-join construction with exact isosceles numbers, and a finite reciprocal-sum bound for Erdős 289—alongside 73 earlier statement/proof attempts and three large SAT instances for `R(5,5)`.
 
 Author: Jared Wilder. First public timestamp: 2026-09-10.
 
-## Two finished proofs
+## 1. Erdős 503: orthogonal joins and exact isosceles numbers
 
-`lean-proofs/Erdos503.lean` — 354 lines, **0 `sorry`**, a complete multi-part proof, **8 of 8
-theorems with footprint `{propext, Classical.choice, Quot.sound}`** and no `sorryAx`, no
-`ofReduceBool`, no `native_decide`.
+`lean-proofs/Erdos503.lean` is 354 lines with **0 `sorry`** and eight theorems, all with axiom footprint
 
-**What it actually proves is written up in [ERDOS-503-ISOSCELES.md](ERDOS-503-ISOSCELES.md),** which
-was sitting unpublished while only the bare Lean file shipped. The centrepiece is an orthogonal
-join: **orthogonality plus equal radii force every cross distance to the single value `sqrt(2R^2)`,
-with no side condition.** From it the file derives superadditivity `S(d1+d2) >= S(d1)+S(d2)`, and
-these exact isosceles numbers:
+```text
+{propext, Classical.choice, Quot.sound}.
+```
 
-| d | iso(d) | route |
-|---|---|---|
-| 2 | **6** | pentagon plus centre (Kelly), reproduced from the mechanism rather than looked up |
-| 3 | **8** | join(pentagon, two axis points) plus centre = 5+2+1 (Croft/Kelly), reproduced |
-| 6 | **28** | Schlafli 27 plus centre = C(8,2) |
-| 8 | **45** | 45-point two-distance set in R^8 = C(10,2), no centre needed |
-| 22 | **276** | McLaughlin 275 plus centre = C(24,2) |
+No `sorryAx`, `ofReduceBool`, or `native_decide` is used.
 
-It also proves the DGS and Blokhuis bounds differ by **exactly 1**: `d(d+3)/2 + 1 = C(d+2,2)`.
+The accompanying writeup [`ERDOS-503-ISOSCELES.md`](ERDOS-503-ISOSCELES.md) develops the central construction:
 
-The write-up notes that d = 22 is not listed in Ionin, *Isosceles Sets* (EJC 2009), which records
-sharpness at n = 1, 2, 6, 8, nor on erdosproblems.com/503 -- and then says in its own words:
-**"No novelty claim is made -- two web sources is not a literature search."** Numeric cross-checks
-independent of Lean are included, including 3,654 of 3,654 clean triples at n = 8.
+> **Orthogonality plus equal radii force every cross distance in the join to the common value `sqrt(2R^2)`.**
 
-`lean-proofs/Erdos289Head.lean` — 68 lines, **0 `sorry`**, using `decide +kernel`. Reciprocal-sum
-bounds F1 and the W4n and W4b forms in pure naturals and in rationals, exhaustive over [5, 60].
+From this the file derives superadditivity
 
-## 73 formalization attempts, and the number that matters
+```text
+S(d1+d2) >= S(d1)+S(d2)
+```
 
-`formalizer-line/` holds `erdos-1.lean` through `erdos-146.lean` plus scratch files.
+and reproduces the following exact isosceles numbers:
 
-**70 of the 73 contain `sorry`. Three do not.**
+| d | iso(d) | construction |
+|---|---:|---|
+| 2 | **6** | pentagon plus centre (Kelly) |
+| 3 | **8** | pentagon + two axis points + centre (Croft/Kelly) |
+| 6 | **28** | Schläfli 27 plus centre |
+| 8 | **45** | 45-point two-distance set in `R^8` |
+| 22 | **276** | McLaughlin 275 plus centre |
 
-These are the daemon's attempts at formalizing statements across the Erdos frontier. They are
-published because the attempt record is the point: it shows which problems a formalizer can even
-state cleanly and where it stalls. **None of them proves anything, and the three without `sorry`
-should be read before being believed** — a file without `sorry` may still be stating something
-trivial.
+It also proves that the Delsarte–Goethals–Seidel and Blokhuis bounds differ by exactly 1:
 
-## R(5,5) repair certificates
+```text
+d(d+3)/2 + 1 = C(d+2,2).
+```
 
-`ramsey-r55/` holds `repair-240.cnf`, `repair-480.cnf` and `repair-723.cnf`, three SAT instances at
-84 MB each, in DRAT/LRAT-adjacent form.
+The `d=22` value was not found in the limited literature sources checked for this release; that observation is not a comprehensive priority search. Independent numerical checks include all 3,654 triples at `d=8`.
 
-**These are artifacts, not a Ramsey result.** R(5,5) is famously open; the literature bracket is
-roughly 43 to 48 and nothing here moves it. The certificates are published as reproducible SAT
-instances, and any claim attached to them would have to come from a solver run that is not included
-here.
+## 2. Erdős 289: finite reciprocal-sum bounds
 
-## Where the finished work is
+`lean-proofs/Erdos289Head.lean` is 68 lines with **0 `sorry`**, using kernel `decide`. It proves the finite reciprocal-sum bounds F1, W4n and W4b in natural and rational forms over the range `[5,60]`.
 
-The clean, audited, kernel-verified material is elsewhere:
-[erdos-theorems](https://github.com/jaredwilder/erdos-theorems) for 79 clean-axiom declarations,
-[lean-forge-graph-theory](https://github.com/jaredwilder/lean-forge-graph-theory) for 218 sorry-free
-files, [erdos595-barrier-tower](https://github.com/jaredwilder/erdos595-barrier-tower) for 27, and
-the index at
-[erdos-release-index](https://github.com/jaredwilder/erdos-release-index).
+## 3. Earlier formalization attempts
 
-This repository is the tail: what was attempted, what was left unfinished, and what was generated
-but never adjudicated.
+`formalizer-line/` contains 73 historical Lean attempts across the Erdős problem set.
+
+- **70 contain `sorry`.**
+- **3 do not contain `sorry`.**
+
+These files are useful as formalization records, not as a curated theorem collection. Absence of `sorry` alone is not enough to establish that a statement is mathematically substantive or faithful to its source; each file still needs ordinary theorem/source inspection.
+
+The more curated formal material from the same research estate lives in `erdos-theorems`, `lean-forge-graph-theory`, and `erdos595-barrier-tower`.
+
+## 4. `R(5,5)` SAT instances
+
+`ramsey-r55/` contains three large SAT instances:
+
+- `repair-240.cnf`
+- `repair-480.cnf`
+- `repair-723.cnf`
+
+Each is about 84 MB and stored in a DRAT/LRAT-adjacent workflow format.
+
+They are **reproducible SAT instances**, not checked proofs of a new Ramsey bound. No solver certificate establishing a new `R(5,5)` result is included here.
+
+## Related repositories
+
+For curated formal mathematics:
+
+- [erdos-theorems](https://github.com/jaredwilder/erdos-theorems) — 79 declarations with clean axiom-footprint accounting;
+- [lean-forge-graph-theory](https://github.com/jaredwilder/lean-forge-graph-theory) — 218 sorry-free theorem files;
+- [erdos595-barrier-tower](https://github.com/jaredwilder/erdos595-barrier-tower) — 27 sorry-free barrier-theorem files;
+- [erdos-release-index](https://github.com/jaredwilder/erdos-release-index) — cross-repository index.
 
 ## License
 
