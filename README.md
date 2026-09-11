@@ -1,7 +1,11 @@
 # erdos-lean-remainder
 
-The last of the Lean material: two finished standalone proofs, 73 formalization attempts of which
-**70 still contain `sorry`**, and three SAT repair certificates for R(5,5).
+**Two finished Lean proofs: the Erdos 503 orthogonal join with the exact isosceles numbers
+iso(2)=6, iso(3)=8, iso(6)=28, iso(8)=45, iso(22)=276, and an exhaustive reciprocal-sum bound for
+Erdos 289.** Both kernel-clean, 8 of 8 and 5 of 5 declarations with the standard footprint.
+
+Also here, labelled as what they are: 73 formalization attempts of which 70 still contain `sorry`,
+and three SAT repair certificates for R(5,5).
 
 Author: Jared Wilder. First public timestamp: 2026-09-10.
 
